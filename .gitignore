@@ -1,0 +1,15 @@
+.DS_Store
+app/dist/*.html
+app/dist/*.js
+app/dist/*.css
+app/dist/*.less
+builds/*
+node_modules/
+npm-debug.log
+npm-debug.log.*
+thumbs.db
+!.gitkeep
+yarn.lock
+*.iml
+*.ipr
+.idea
