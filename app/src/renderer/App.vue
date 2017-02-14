@@ -1,29 +1,47 @@
 <template>
-    <div id="#app">
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Dummyc0m</a>
-                </div>
-                <div id="navbar" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="#" @click="openFile()">Open</a></li>
-                    </ul>
-                </div><!--/.nav-collapse -->
-            </div>
-        </nav>
+    <div id="app">
         <router-view></router-view>
     </div>
 </template>
 
 <script>
+    import test from 'components/test.vue'
     import store from 'renderer/vuex/store'
     export default {
         store,
         methods: {
             openFile () {
-                console.log(this.$electron.remote.app.getName())
+                const self = this
+                setTimeout(function () {
+                    const {dialog} = self.$electron.remote
+                    dialog.showOpenDialog({
+                        filters: [
+                            {name: 'Json', extensions: ['json']}
+                        ]
+                    }, function (fileNames) {
+                        console.log(fileNames)
+                        if (fileNames === undefined) {
+                            console.log('No file selected')
+                        } else {
+                            self.readFile(fileNames[0])
+                        }
+                    })
+                }, 0)
+            },
+            readFile (filepath) {
+                const fs = require('fs')
+                fs.readFile(filepath, 'utf-8', function (err, data) {
+                    if (err) {
+                        alert('An error ocurred reading the file :' + err.message)
+                        return
+                    }
+                    // Change how to handle the file content
+                    console.log('The file content is : ' + data)
+                })
             }
+        },
+        components: {
+            test
         }
     }
 </script>
