@@ -4,6 +4,8 @@
   "description": "formJsonGenerator",
   "main": "./dist/main.js",
   "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.1.1",
     "vue": "^2.1.10",
     "vue-electron": "^1.0.6",
     "vue-resource": "^1.0.3",

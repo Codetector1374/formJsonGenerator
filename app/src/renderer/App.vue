@@ -1,39 +1,33 @@
 <template>
-  <div id="#app">
-    <router-view></router-view>
-  </div>
+    <div id="#app">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Dummyc0m</a>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#" @click="openFile()">Open</a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+        <router-view></router-view>
+    </div>
 </template>
 
 <script>
-  import store from 'renderer/vuex/store'
-  export default {
-    store
-  }
+    import store from 'renderer/vuex/store'
+    export default {
+        store,
+        methods: {
+            openFile () {
+                console.log(this.$electron.remote.app.getName())
+            }
+        }
+    }
 </script>
 
 <style>
-  @import url(https://fonts.googleapis.com/css?family=Lato:300);
 
-  * {
-    margin: 0;
-    padding: 0;
-  }
-
-  html,
-  body { height: 100%; }
-
-  body {
-    align-items: center;
-    background:
-      radial-gradient(
-        ellipse at center,
-        rgba(255, 255, 255, 1) 0%,
-        rgba(229, 229, 229, .85) 100%
-      );
-    background-position: center;
-    display: flex;
-    font-family: Lato, Helvetica, sans-serif;
-    justify-content: center;
-    text-align: center;
-  }
 </style>

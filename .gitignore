@@ -3,6 +3,8 @@ app/dist/*.html
 app/dist/*.js
 app/dist/*.css
 app/dist/*.less
+app/node_modules
+app/yarn.lock
 builds/*
 node_modules/
 npm-debug.log

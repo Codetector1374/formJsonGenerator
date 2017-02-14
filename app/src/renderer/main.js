@@ -6,18 +6,21 @@ import Router from 'vue-router'
 import App from './App'
 import routes from './routes'
 
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/js/bootstrap'
+
 Vue.use(Electron)
 Vue.use(Resource)
 Vue.use(Router)
 Vue.config.debug = true
 
 const router = new Router({
-  scrollBehavior: () => ({ y: 0 }),
-  routes
+    scrollBehavior: () => ({y: 0}),
+    routes
 })
 
 /* eslint-disable no-new */
 new Vue({
-  router,
-  ...App
+    router,
+    ...App
 }).$mount('#app')
