@@ -1,51 +1,48 @@
 <template>
     <div id="app">
-        <router-view></router-view>
+        <transition :name="transitionName" mode="out-in">
+            <router-view class="child-transition"></router-view>
+        </transition>
     </div>
 </template>
 
 <script>
-    import test from 'components/test.vue'
     import store from 'renderer/vuex/store'
     export default {
         store,
-        methods: {
-            openFile () {
-                const self = this
-                setTimeout(function () {
-                    const {dialog} = self.$electron.remote
-                    dialog.showOpenDialog({
-                        filters: [
-                            {name: 'Json', extensions: ['json']}
-                        ]
-                    }, function (fileNames) {
-                        console.log(fileNames)
-                        if (fileNames === undefined) {
-                            console.log('No file selected')
-                        } else {
-                            self.readFile(fileNames[0])
-                        }
-                    })
-                }, 0)
-            },
-            readFile (filepath) {
-                const fs = require('fs')
-                fs.readFile(filepath, 'utf-8', function (err, data) {
-                    if (err) {
-                        alert('An error ocurred reading the file :' + err.message)
-                        return
-                    }
-                    // Change how to handle the file content
-                    console.log('The file content is : ' + data)
-                })
+        data () {
+            return {
+                transitionName: 'slide-left'
             }
         },
-        components: {
-            test
+        methods: {
         }
     }
 </script>
 
 <style>
+    #app {
+        font-family: 'Avenir', Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        color: #2c3e50;
+        margin-top: 60px;
+    }
+    .slide-left-enter, .slide-right-leave-active {
+        opacity: 0;
+        -webkit-transform: translate(100px, 0);
+        transform: translate(100px, 0);
+        transition: opacity .2s ease;
+    }
 
+    .slide-left-leave-active, .slide-right-enter {
+        opacity: 0;
+        -webkit-transform: translate(-100px, 0);
+        transform: translate(-100px, 0);
+        transition: opacity .5s ease;
+    }
+
+    .child-transition {
+        transition: all .4s ease;
+    }
 </style>

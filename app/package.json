@@ -5,9 +5,12 @@
   "main": "./dist/main.js",
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0",
     "jquery": "^3.1.1",
+    "mini-toastr": "^0.3.10",
     "vue": "^2.1.10",
     "vue-electron": "^1.0.6",
+    "vue-notifications": "^0.7.6",
     "vue-resource": "^1.0.3",
     "vue-router": "^2.1.2",
     "vuex": "^2.1.1"
