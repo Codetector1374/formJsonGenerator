@@ -1,5 +1,12 @@
 <template>
     <div class="container">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Edit Config</a>
+                </div>
+            </div>
+        </nav>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <!--<h1 class="panel-title">Select File</h1>-->
@@ -27,11 +34,33 @@
                 </div>
             </div>
         </div>
+        <div class="panel panel-default" v-if="hasFileOpen">
+            <div class="panel-heading">
+                <h1 class="panel-title">Edit Template</h1>
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li class="list-group-item form-horizontal" v-for="(value, key) in fileData">
+                        <div class="form-group">
+                            <label :for="key" class="col-xs-2 control-label">{{key}}</label>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" :id="key" :value="value"
+                                       @input="change(key, $event)">
+                            </div>
+                            <div class="col-xs-1">
+                                <button class="btn btn-danger btn-block"><i class="fa fa-trash fa-lg"></i></button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
     import VueNotifications from 'vue-notifications'
+    import fs from 'fs'
     export default {
         name: 'EditConfig',
         data () {
@@ -47,8 +76,17 @@
             }
         },
         methods: {
+            change (key, event) {
+                this.fileData[key] = event.target.value
+            },
             saveFile () {
-                VueNotifications.success({message: 'File Saved!'})
+                fs.writeFile(this.currentFile, JSON.stringify(this.fileData), 'utf8', function (err) {
+                    if (err) {
+                        VueNotifications.err({message: 'Failed to save file'})
+                    } else {
+                        VueNotifications.success({message: 'File Saved!'})
+                    }
+                })
             },
             openFile () {
                 const self = this
@@ -59,7 +97,6 @@
                             {name: 'Json', extensions: ['json']}
                         ]
                     }, function (fileNames) {
-                        console.log(fileNames)
                         if (fileNames === undefined) {
 //                            VueNotifications.warn({message: 'No File selected'})
                         } else {
@@ -75,7 +112,6 @@
                 this.fileData = {}
             },
             readFile (filepath) {
-                const fs = require('fs')
                 const self = this
                 fs.readFile(filepath, 'utf-8', function (err, data) {
                     if (err) {
@@ -99,13 +135,18 @@
 </script>
 
 <style scoped>
+    .list-group-item .form-group {
+        margin-bottom: 0 !important;
+    }
+
     .panel-heading a:after {
-        font-family:'Glyphicons Halflings';
-        content:"\e114";
+        font-family: 'Glyphicons Halflings';
+        content: "\e114";
         float: right;
         color: grey;
     }
+
     .panel-heading a.collapsed:after {
-        content:"\e080";
+        content: "\e080";
     }
 </style>
