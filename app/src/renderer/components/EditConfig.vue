@@ -48,7 +48,7 @@
                                        @input="change(key, $event)">
                             </div>
                             <div class="col-xs-1">
-                                <button class="btn btn-danger btn-block"><i class="fa fa-trash fa-lg"></i></button>
+                                <button class="btn btn-danger btn-block" @click="remove(key)"><i class="fa fa-trash fa-lg"></i></button>
                             </div>
                         </div>
                     </li>
@@ -59,6 +59,7 @@
 </template>
 
 <script>
+    import Vue from 'vue'
     import VueNotifications from 'vue-notifications'
     import fs from 'fs'
     export default {
@@ -76,6 +77,9 @@
             }
         },
         methods: {
+            remove (key) {
+                Vue.delete(this.fileData, key)
+            },
             change (key, event) {
                 this.fileData[key] = event.target.value
             },
