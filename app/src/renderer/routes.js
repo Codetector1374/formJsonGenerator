@@ -10,6 +10,11 @@ export default [
         component: require('components/EditConfig')
     },
     {
+        path: '/edit-form',
+        name: 'editForm',
+        component: require('components/FormEditor')
+    },
+    {
         path: '*',
         redirect: '/'
     }

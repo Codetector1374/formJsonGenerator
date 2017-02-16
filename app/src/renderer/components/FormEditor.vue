@@ -3,7 +3,7 @@
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Edit Config</a>
+                    <router-link class="navbar-brand" :to="{name: 'home'}">Form Editor</router-link>
                 </div>
             </div>
         </nav>
@@ -37,24 +37,15 @@
             </div>
             <div class="panel panel-default" v-if="hasFileOpen">
                 <div class="panel-heading">
-                    <h1 class="panel-title">Edit Template</h1>
+                    <h1 class="panel-title">Edit Form</h1>
                 </div>
                 <div class="panel-body">
-                    <ul class="list-group">
-                        <li class="list-group-item form-horizontal" v-for="(value, key) in fileData">
-                            <div class="form-group">
-                                <label :for="key" class="col-xs-2 control-label">{{key}}</label>
-                                <div class="col-xs-9">
-                                    <input type="text" class="form-control" :id="key" :value="value"
-                                           @input="change(key, $event)">
-                                </div>
-                                <div class="col-xs-1">
-                                    <button class="btn btn-danger btn-block" @click="remove(key)"><i
-                                            class="fa fa-trash fa-lg"></i></button>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                    <draggable :list="fileData.form" @start="fold=true" @end="fold=false">
+                        <div v-for="(item, index) in fileData.form">
+                            <textFieldEdit :collapse="fold" v-if="item.type === 'text'" v-model="fileData.form[index]"></textFieldEdit>
+                            <otherFieldEdit :collapse="fold" v-else v-model="fileData.form[index]"></otherFieldEdit>
+                        </div>
+                    </draggable>
                 </div>
             </div>
         </div>
@@ -62,16 +53,25 @@
 </template>
 
 <script>
+    import draggable from 'vuedraggable'
     import Vue from 'vue'
     import VueNotifications from 'vue-notifications'
     import fs from 'fs'
+    import textFieldEdit from './formEditor/textFieldEdit'
+    import otherFieldEdit from './formEditor/otherFieldEdit'
     export default {
-        name: 'EditConfig',
+        name: 'FormEditor',
+        components: {
+            textFieldEdit,
+            draggable,
+            otherFieldEdit
+        },
         data () {
             return {
                 currentFile: '',
                 fileData: {},
-                fileContent: ''
+                fileContent: '',
+                fold: false
             }
         },
         computed: {
@@ -87,7 +87,7 @@
                 this.fileData[key] = event.target.value
             },
             saveFile () {
-                fs.writeFile(this.currentFile, JSON.stringify(this.fileData), 'utf8', function (err) {
+                fs.writeFile(this.currentFile, JSON.stringify(this.fileData, null, 2), 'utf8', function (err) {
                     if (err) {
                         VueNotifications.err({message: 'Failed to save file'})
                     } else {
@@ -128,6 +128,12 @@
                     try {
                         if (data.length > 0) {
                             self.fileData = JSON.parse(data)
+//                            console.log(self.fileData.form)
+                            if (self.fileData.form === undefined) {
+                                VueNotifications.warn({message: 'Not a form def file'})
+                                self.closeFile()
+                                return
+                            }
                         }
                         VueNotifications.success({message: 'File Opened!'})
                     } catch (magic) {
@@ -142,20 +148,7 @@
 </script>
 
 <style scoped>
-    .list-group-item .form-group {
-        margin-bottom: 0 !important;
-    }
-    .container.first{
+    .container.first {
         margin-top: 60px;
-    }
-    .panel-heading a:after {
-        font-family: 'Glyphicons Halflings';
-        content: "\e114";
-        float: right;
-        color: grey;
-    }
-
-    .panel-heading a.collapsed:after {
-        content: "\e080";
     }
 </style>

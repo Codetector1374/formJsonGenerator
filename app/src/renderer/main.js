@@ -9,6 +9,8 @@ import routes from './routes'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/js/bootstrap'
 import 'font-awesome/css/font-awesome.css'
+import 'bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css'
+import 'bootstrap-switch/dist/js/bootstrap-switch'
 import miniToastr from 'mini-toastr'
 
 import VueNotifications from 'vue-notifications'
@@ -54,3 +56,11 @@ new Vue({
     router,
     ...App
 }).$mount('#app')
+window.addEventListener('dragover', function (e) {
+    e = e || event
+    e.preventDefault()
+}, false)
+window.addEventListener('drop', function (e) {
+    e = e || event
+    e.preventDefault()
+}, false)
