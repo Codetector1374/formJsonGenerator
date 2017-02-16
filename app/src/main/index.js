@@ -15,6 +15,7 @@ function createWindow () {
         height: 600,
         width: 800
     })
+    // mainWindow.webContents.openDevTools()
 
     mainWindow.loadURL(winURL)
 

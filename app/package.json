@@ -7,7 +7,6 @@
     "bootstrap": "^3.3.7",
     "bootstrap-switch": "^3.3.3",
     "font-awesome": "^4.7.0",
-    "force-boolean": "^0.0.1",
     "jquery": "^3.1.1",
     "mini-toastr": "^0.3.10",
     "vue": "^2.1.10",
