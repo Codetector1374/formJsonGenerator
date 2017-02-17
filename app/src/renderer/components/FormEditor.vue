@@ -38,11 +38,15 @@
             <div class="panel panel-default" v-if="hasFileOpen">
                 <div class="panel-heading">
                     <h1 class="panel-title">Edit Form</h1>
+                    <div class="pull-right" style="margin-top: -1.3em">
+                        <button class="btn btn-default btn-xs" @click="fold=!fold">折叠/展开</button>
+                    </div>
                 </div>
                 <div class="panel-body">
                     <draggable :list="fileData.form" @start="fold=true" @end="fold=false">
                         <div v-for="(item, index) in fileData.form">
                             <textFieldEdit :collapse="fold" v-if="item.type === 'text'" v-model="fileData.form[index]"></textFieldEdit>
+                            <selectFieldEdit :collapse="fold" v-else-if="item.type === 'select'" v-model="fileData.form[index]"></selectFieldEdit>
                             <otherFieldEdit :collapse="fold" v-else v-model="fileData.form[index]"></otherFieldEdit>
                         </div>
                     </draggable>
@@ -59,12 +63,14 @@
     import fs from 'fs'
     import textFieldEdit from './formEditor/textFieldEdit'
     import otherFieldEdit from './formEditor/otherFieldEdit'
+    import selectFieldEdit from './formEditor/selectFieldEdit'
     export default {
         name: 'FormEditor',
         components: {
             textFieldEdit,
             draggable,
-            otherFieldEdit
+            otherFieldEdit,
+            selectFieldEdit
         },
         data () {
             return {

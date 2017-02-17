@@ -2,7 +2,7 @@
     <div class="panel panel-default">
         <div class="panel-heading draggable">
             <h1 class="panel-title">{{value.title}}</h1>
-            <h1 class="pull-right panel-title" style="margin-top: -1em;">其他[{{value.type}}]</h1>
+            <h1 class="pull-right panel-title" style="margin-top: -1em;">单选</h1>
         </div>
         <div class="collapse-animation" :class="{collapsed : collapse}">
             <div class="panel-body">
@@ -18,6 +18,16 @@
                         <input type="text" class="form-control" v-model="value.title">
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label class="col-xs-4 control-label">默认值</label>
+                    <div class="col-xs-8">
+                        <input type="text" class="form-control" :value="value.default">
+                    </div>
+                </div>
+                <div>
+                    <h4>选项列表(拖拽排序)</h4>
+                    <editableList v-model="value.options"></editableList>
+                </div>
             </div>
             <div class="panel-footer">
                 ID: {{value.id}}
@@ -28,14 +38,16 @@
 
 <script>
     import CheckBox from 'components/CheckBox'
+    import editableList from './editableList'
     export default {
-        name: 'otherFieldEdit',
+        name: 'selectFieldEdit',
         methods: {
             test (value) {
             }
         },
         components: {
-            CheckBox
+            CheckBox,
+            editableList
         },
         props: {
             value: {
