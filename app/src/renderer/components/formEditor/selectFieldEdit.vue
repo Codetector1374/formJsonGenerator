@@ -21,12 +21,12 @@
                 <div class="form-group row">
                     <label class="col-xs-4 control-label">默认值</label>
                     <div class="col-xs-8">
-                        <input type="text" class="form-control" :value="value.default">
+                        <v-select v-model="value.default" :options="value.options"></v-select>
                     </div>
                 </div>
                 <div>
-                    <h4>选项列表(拖拽排序)</h4>
-                    <editableList v-model="value.options"></editableList>
+                    <h4>选项列表(拖拽排序)<button class="btn btn-default btn-sm" @click="showOptionList = !showOptionList">折叠/展开</button></h4>
+                    <editableList v-model="value.options" v-if="showOptionList"></editableList>
                 </div>
             </div>
             <div class="panel-footer">
@@ -39,15 +39,18 @@
 <script>
     import CheckBox from 'components/CheckBox'
     import editableList from './editableList'
+    import vSelect from 'vue-select'
     export default {
         name: 'selectFieldEdit',
-        methods: {
-            test (value) {
+        data () {
+            return {
+                showOptionList: false
             }
         },
         components: {
             CheckBox,
-            editableList
+            editableList,
+            vSelect
         },
         props: {
             value: {

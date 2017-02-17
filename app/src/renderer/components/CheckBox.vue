@@ -10,7 +10,7 @@
             const self = this
             $(this.$el).bootstrapSwitch()
             $(this.$el).on('switchChange.bootstrapSwitch', function (event, state) {
-                self.value = state
+                self.$emit('input', state)
             })
         },
         props: {
@@ -20,9 +20,6 @@
             }
         },
         methods: {
-            valueChanged (event) {
-                console.log(event)
-            },
             processBoolean (value) {
                 switch (typeof value) {
                     case 'boolean':
