@@ -10,11 +10,13 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.1.1",
     "mini-toastr": "^0.3.10",
+    "uuid": "^3.0.1",
     "vue": "^2.1.10",
     "vue-electron": "^1.0.6",
     "vue-notifications": "^0.7.6",
     "vue-resource": "^1.0.3",
     "vue-router": "^2.1.2",
+    "vue-select": "^2.0.0",
     "vuedraggable": "^2.8.3-rc0",
     "vuex": "^2.1.1"
   },

@@ -43,12 +43,13 @@
                     </div>
                 </div>
                 <div class="panel-body">
+                    <div class="row" style="margin-bottom: 1em">
+                        <div class="col-xs-4"><button class="btn btn-default btn-block" @click="createItem('text')">添加填空</button></div>
+                        <div class="col-xs-4"><button class="btn btn-default btn-block" @click="createItem('select')">添加单选</button></div>
+                        <div class="col-xs-4"><button class="btn btn-default btn-block" @click="createItem('select-multiple')">添加多选</button></div>
+                    </div>
                     <draggable :list="fileData.form" @start="fold=true" @end="fold=false">
-                        <div v-for="(item, index) in fileData.form">
-                            <textFieldEdit :collapse="fold" v-if="item.type === 'text'" v-model="fileData.form[index]"></textFieldEdit>
-                            <selectFieldEdit :collapse="fold" v-else-if="item.type === 'select'" v-model="fileData.form[index]"></selectFieldEdit>
-                            <otherFieldEdit :collapse="fold" v-else v-model="fileData.form[index]"></otherFieldEdit>
-                        </div>
+                        <FieldEditor v-for="(item, index) in fileData.form" :collapse="fold" v-model="fileData.form[index]" :id="index" @remove="removeItem"></FieldEditor>
                     </draggable>
                 </div>
             </div>
@@ -57,20 +58,17 @@
 </template>
 
 <script>
+    import uuidV4 from 'uuid/v4'
     import draggable from 'vuedraggable'
     import Vue from 'vue'
     import VueNotifications from 'vue-notifications'
     import fs from 'fs'
-    import textFieldEdit from './formEditor/textFieldEdit'
-    import otherFieldEdit from './formEditor/otherFieldEdit'
-    import selectFieldEdit from './formEditor/selectFieldEdit'
+    import FieldEditor from './formEditor/FieldEditor'
     export default {
         name: 'FormEditor',
         components: {
-            textFieldEdit,
             draggable,
-            otherFieldEdit,
-            selectFieldEdit
+            FieldEditor
         },
         data () {
             return {
@@ -86,6 +84,32 @@
             }
         },
         methods: {
+            createItem (type) {
+                // uuid
+                let newForm = {
+                    id: uuidV4().toUpperCase(),
+                    required: false,
+                    default: '',
+                    type: type
+                }
+                switch (type) {
+                    case 'text':
+                        newForm.title = '新建文本问题'
+                        break
+                    case 'select':
+                        newForm.title = '新建单选问题'
+                        newForm.options = []
+                        break
+                    case 'select-multiple':
+                        newForm.title = '新建多选问题'
+                        newForm.options = []
+                        break
+                }
+                this.fileData.form.splice(0, 0, newForm)
+            },
+            removeItem (id) {
+                this.fileData.form.splice(id, 1)
+            },
             remove (key) {
                 Vue.delete(this.fileData, key)
             },

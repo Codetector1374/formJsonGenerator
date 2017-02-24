@@ -31,7 +31,7 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         color: #2c3e50;
-        overflow: scroll;
+        overflow: hidden;
         /*margin-top: 60px;*/
     }
     .slide-left-enter, .slide-right-leave-active {
@@ -66,8 +66,8 @@
         background-color: #f5f5f5;
     }
 
-    .container .text-muted {
-        margin: 20px 0;
-    }
+    /*.container .text-muted {*/
+        /*margin: 20px 0;*/
+    /*}*/
 
 </style>

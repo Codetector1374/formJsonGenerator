@@ -15,7 +15,7 @@
         <div class="form-group row">
             <label class="col-xs-4 control-label">默认值</label>
             <div class="col-xs-8">
-                <v-select v-model="value.default" :options="value.options"></v-select>
+                <v-select multiple v-model="value.default" :options="value.options"></v-select>
             </div>
         </div>
         <div>
@@ -32,7 +32,7 @@
     import editableList from './editableList'
     import vSelect from 'vue-select'
     export default {
-        name: 'selectFieldEdit',
+        name: 'multipleSelect',
         data () {
             return {
                 showOptionList: false

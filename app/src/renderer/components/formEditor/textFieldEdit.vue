@@ -1,32 +1,21 @@
 <template>
-    <div class="panel panel-default">
-        <div class="panel-heading draggable">
-            <h1 class="panel-title">{{value.title}}</h1>
-            <h1 class="pull-right panel-title" style="margin-top: -1em;">文本</h1>
-        </div>
-        <div class="collapse-animation" :class="{collapsed : collapse}">
-            <div class="panel-body">
-                <div class="form-group row">
-                    <label class="col-xs-6">是否必填项</label>
-                    <div class="col-xs-6">
-                        <CheckBox v-model="value.required"></CheckBox>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-xs-4 control-label">标题</label>
-                    <div class="col-xs-8">
-                        <input type="text" class="form-control" v-model="value.title">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-xs-4 control-label">默认值</label>
-                    <div class="col-xs-8">
-                        <input type="text" class="form-control" :value="value.default">
-                    </div>
-                </div>
+    <div class="panel-body">
+        <div class="form-group row">
+            <label class="col-xs-6">是否必填项</label>
+            <div class="col-xs-6">
+                <CheckBox v-model="value.required"></CheckBox>
             </div>
-            <div class="panel-footer">
-                ID: {{value.id}}
+        </div>
+        <div class="form-group row">
+            <label class="col-xs-4 control-label">标题</label>
+            <div class="col-xs-8">
+                <input type="text" class="form-control" v-model="value.title">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-xs-4 control-label">默认值</label>
+            <div class="col-xs-8">
+                <input type="text" class="form-control" :value="value.default">
             </div>
         </div>
     </div>
@@ -36,10 +25,6 @@
     import CheckBox from 'components/CheckBox'
     export default {
         name: 'textFieldEdit',
-        methods: {
-            test (value) {
-            }
-        },
         components: {
             CheckBox
         },
@@ -47,10 +32,6 @@
             value: {
                 type: Object,
                 required: true
-            },
-            collapse: {
-                type: Boolean,
-                default: false
             }
         }
     }
