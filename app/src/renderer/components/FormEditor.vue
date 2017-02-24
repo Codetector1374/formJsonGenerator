@@ -3,7 +3,7 @@
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <router-link class="navbar-brand" :to="{name: 'home'}">Form Editor</router-link>
+                    <router-link class="navbar-brand" :to="{name: 'home'}">木轮子™表格编辑器</router-link>
                 </div>
             </div>
         </nav>
@@ -11,33 +11,34 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <!--<h1 class="panel-title">Select File</h1>-->
-                    <button class="btn btn-default" v-if="!hasFileOpen" @click="openFile()">Open</button>
-                    <button class="btn btn-primary" v-if="hasFileOpen" @click="saveFile()">Save</button>
-                    <button class="btn btn-danger" v-if="hasFileOpen" @click="closeFile()">Close</button>
+                    <button class="btn btn-default" v-if="!hasFileOpen" @click="openFile()">打开文件</button>
+                    <button class="btn btn-success" v-if="!hasFileOpen" @click="createAndOpen()">创建并打开文件</button>
+                    <button class="btn btn-primary" v-if="hasFileOpen" @click="saveFile()">保存</button>
+                    <button class="btn btn-danger" v-if="hasFileOpen" @click="closeFile()">关闭文件</button>
                 </div>
                 <div class="panel-body">
-                    <b>Current File: </b>{{currentFile}}
+                    <b>当前文件: </b>{{currentFile}}
                 </div>
             </div>
-            <div class="panel panel-default" v-if="hasFileOpen">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-target="#fileView"
-                           href="javascript:" class="collapsed">
-                            File Raw Content
-                        </a>
-                    </h4>
+            <!--<div class="panel panel-default" v-if="hasFileOpen">-->
+                <!--<div class="panel-heading">-->
+                    <!--<h4 class="panel-title">-->
+                        <!--<a data-toggle="collapse" data-target="#fileView"-->
+                           <!--href="javascript:" class="collapsed">-->
+                            <!--File Raw Content-->
+                        <!--</a>-->
+                    <!--</h4>-->
 
-                </div>
-                <div id="fileView" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <pre>{{fileContent}}</pre>
-                    </div>
-                </div>
-            </div>
+                <!--</div>-->
+                <!--<div id="fileView" class="panel-collapse collapse">-->
+                    <!--<div class="panel-body">-->
+                        <!--<pre>{{fileContent}}</pre>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
             <div class="panel panel-default" v-if="hasFileOpen">
                 <div class="panel-heading">
-                    <h1 class="panel-title">Edit Form</h1>
+                    <h1 class="panel-title">编辑表格</h1>
                     <div class="pull-right" style="margin-top: -1.3em">
                         <button class="btn btn-default btn-xs" @click="fold=!fold">折叠/展开</button>
                     </div>
@@ -124,6 +125,33 @@
                         VueNotifications.success({message: 'File Saved!'})
                     }
                 })
+            },
+            createAndOpen () {
+                const self = this
+                setTimeout(function () {
+                    let defaultForm = {
+                        form: []
+                    }
+                    const {dialog} = self.$electron.remote
+                    dialog.showSaveDialog({
+                        filters: [
+
+                            {name: 'JsonObject', extensions: ['json']}
+
+                        ]
+                    }, function (fileName) {
+                        if (fileName === undefined) return
+                        fs.writeFile(fileName, JSON.stringify(defaultForm, null, 2), 'utf8', function (err) {
+                            if (err) {
+                                VueNotifications.err({message: 'Failed to save file'})
+                            } else {
+                                VueNotifications.success({message: 'File Saved!'})
+                                self.readFile(fileName)
+                                self.currentFile = fileName
+                            }
+                        })
+                    })
+                }, 0)
             },
             openFile () {
                 const self = this

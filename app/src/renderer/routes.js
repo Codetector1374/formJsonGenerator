@@ -1,6 +1,6 @@
 export default [
     {
-        path: '/',
+        path: '/home',
         name: 'home',
         component: require('components/home')
     },
@@ -16,7 +16,7 @@ export default [
     },
     {
         path: '*',
-        redirect: '/'
+        redirect: '/edit-form'
     }
 ]
 
