@@ -2,6 +2,8 @@
 
 > formJsonGenerator
 
+[![Build Status](https://jenkins.codetector.cn/buildStatus/icon?job=formJsonGenerator)](https://jenkins.codetector.cn/job/formJsonGenerator)
+
 ## Build Setup
 
 ``` bash
