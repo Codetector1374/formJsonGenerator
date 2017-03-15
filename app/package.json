@@ -18,7 +18,8 @@
     "vue-router": "^2.1.2",
     "vue-select": "^2.0.0",
     "vuedraggable": "^2.8.3-rc0",
-    "vuex": "^2.1.1"
+    "vuex": "^2.1.1",
+    "about-window": "^1.6.1"
   },
   "devDependencies": {},
   "author": "Codetector <codetector@codetector.cn>"

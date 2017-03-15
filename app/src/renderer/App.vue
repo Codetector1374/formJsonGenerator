@@ -12,7 +12,9 @@
 </template>
 
 <script>
+    import iconImage from 'assets/icon.png'
     import store from 'renderer/vuex/store'
+    import {join} from 'path'
     export default {
         store,
         data () {
@@ -20,16 +22,15 @@
                 transitionName: 'slide-left'
             }
         },
-        create () {
-            const {menu} = self.$electron.remote
-            const app = self.$electron.remote
+        created () {
+            const {Menu, app} = this.$electron.remote
+            console.log(join(__dirname, 'app/icons/icon.icns'))
+            console.log(app)
             const template = [{
                 label: 'Application',
                 submenu: [
-                    {label: 'About Application', selector: 'orderFrontStandardAboutPanel:'},
-                    {type: 'separator'},
                     {
-                        label: 'Quit',
+                        label: '退出',
                         accelerator: 'Command+Q',
                         click: function () {
                             app.quit()
@@ -37,19 +38,19 @@
                     }
                 ]
             }, {
-                label: 'Edit',
+                label: '编辑',
                 submenu: [
-                    {label: 'Undo', accelerator: 'CmdOrCtrl+Z', selector: 'undo:'},
-                    {label: 'Redo', accelerator: 'Shift+CmdOrCtrl+Z', selector: 'redo:'},
+                    {label: '撤销', accelerator: 'CmdOrCtrl+Z', selector: 'undo:'},
+                    {label: '重做', accelerator: 'Shift+CmdOrCtrl+Z', selector: 'redo:'},
                     {type: 'separator'},
-                    {label: 'Cut', accelerator: 'CmdOrCtrl+X', selector: 'cut:'},
-                    {label: 'Copy', accelerator: 'CmdOrCtrl+C', selector: 'copy:'},
-                    {label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:'},
-                    {label: 'Select All', accelerator: 'CmdOrCtrl+A', selector: 'selectAll:'}
+                    {label: '剪切', accelerator: 'CmdOrCtrl+X', selector: 'cut:'},
+                    {label: '复制', accelerator: 'CmdOrCtrl+C', selector: 'copy:'},
+                    {label: '粘贴', accelerator: 'CmdOrCtrl+V', selector: 'paste:'},
+                    {label: '全选', accelerator: 'CmdOrCtrl+A', selector: 'selectAll:'}
                 ]
             }
             ]
-            menu.setApplicationMenu(menu.buildFromTemplate(template))
+            Menu.setApplicationMenu(Menu.buildFromTemplate(template))
         },
         methods: {}
     }

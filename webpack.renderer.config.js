@@ -62,6 +62,10 @@ let rendererConfig = {
                 }
             },
             {
+                test: /\.icns$/,
+                loader: 'file-loader'
+            },
+            {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
                 loader: 'url-loader',
                 query: {
@@ -95,7 +99,8 @@ let rendererConfig = {
     resolve: {
         alias: {
             'components': path.join(__dirname, 'app/src/renderer/components'),
-            'renderer': path.join(__dirname, 'app/src/renderer')
+            'renderer': path.join(__dirname, 'app/src/renderer'),
+            'assets': path.join(__dirname, 'app/src/renderer/assets')
         },
         extensions: ['.js', '.vue', '.json', '.css', '.node'],
         modules: [

@@ -3,7 +3,7 @@
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <router-link class="navbar-brand" :to="{name: 'home'}">木轮子™表格编辑器</router-link>
+                    <router-link class="navbar-brand" :to="{name: 'home'}">表格编辑器</router-link>
                 </div>
             </div>
         </nav>
