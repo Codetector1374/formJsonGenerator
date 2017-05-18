@@ -22,6 +22,7 @@
   "author": "Greg Holguin <simulatedgreg@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "about-window": "^1.6.1",
     "babel-core": "^6.8.0",
     "babel-eslint": "^7.0.0",
     "babel-loader": "^6.2.4",
@@ -59,7 +60,9 @@
     "vue-style-loader": "^1.0.0",
     "vue-template-compiler": "^2.1.10",
     "webpack": "^2.2.0",
-    "webpack-dev-server": "^2.2.0",
-    "about-window": "^1.6.1"
+    "webpack-dev-server": "^2.2.0"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7"
   }
 }

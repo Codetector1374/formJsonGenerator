@@ -12,7 +12,7 @@
 </template>
 
 <script>
-    import iconImage from 'assets/icon.png'
+//    import iconImage from './assets/icon.png'
     import store from 'renderer/vuex/store'
     import {join} from 'path'
     export default {
